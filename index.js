@@ -36,3 +36,17 @@ var server = http.createServer(function(req, res) {
 server.listen(3000, function() {
     console.log('Server is listening');
 })
+
+var router = {
+    'test' : handlers.test
+};
+
+var handlers = {};
+
+handlers.test = function(data, callback) {
+    callback(406, {'hanlder' : 'test'});
+};
+
+handlers.notFound = function(data, callback) {
+    callback(404, {'hanlder' : 'notFound'});
+};
