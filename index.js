@@ -1,5 +1,6 @@
 var http = require('http');
 var url = require('url');
+var StringDecoder = require('string_decoder').StringDecoder;
 
 var server = http.createServer(function(req, res) {
 
@@ -14,12 +15,22 @@ var server = http.createServer(function(req, res) {
 
     var headers = req.headers;
 
-    res.end('Added string\n');
+    var decoder = new StringDecoder('utf8');
+    var buffer = '';
+    req.on('data', function(data) {
+        buffer += decoder.write(data);
+    });
+    req.on('end', function() {
+        buffer += decoder.end();
 
-    console.log(`METHOD: ${method} 
-        | PATH: ${trimmedPath} 
-        | QUERY PARAMS: ${JSON.stringify(queryStringObject)} 
-        | HEADERS: ${JSON.stringify(headers)}`);
+        res.end('Added string\n');
+
+        console.log(`METHOD: ${method} 
+            | PATH: ${trimmedPath} 
+            | QUERY PARAMS: ${JSON.stringify(queryStringObject)} 
+            | HEADERS: ${JSON.stringify(headers)}
+            | PAYLOAD: ${buffer}`);
+    });
 })
 
 server.listen(3000, function() {
