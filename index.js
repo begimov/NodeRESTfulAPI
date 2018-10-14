@@ -10,9 +10,12 @@ var server = http.createServer(function(req, res) {
 
     var method = req.method.toUpperCase();
 
+    var queryStringObject = parsedUrl.query;
+    queryStringObject.toString = function () { return JSON.stringify(this); };
+
     res.end('Added string\n');
 
-    console.log(`METHOD: ${method} | PATH: ${trimmedPath}`);
+    console.log(`METHOD: ${method} | PATH: ${trimmedPath} | QUERY PARAMS: ${queryStringObject}`);
 })
 
 server.listen(3000, function() {
