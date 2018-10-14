@@ -23,6 +23,23 @@ var server = http.createServer(function(req, res) {
     req.on('end', function() {
         buffer += decoder.end();
 
+        var handler = typeof(router[trimmedPath]) !== 'undefined' 
+            ? router[trimmedPath] : handlers.notFound;
+        
+        var data = {
+            'trimmedPath' : trimmedPath,
+            'queryStringObject' : queryStringObject,
+            'method' : method,
+            'headers' : headers,
+            'payload' : buffer
+        };
+
+        handler(data, function(statusCode, payload) {
+            statusCode = typeof(statusCode) == 'number' ? statusCode : 200;
+
+            payload = typeof(payload) == 'object' ? payload : {};
+        });
+
         res.end('Added string\n');
 
         console.log(`METHOD: ${method} 
