@@ -38,25 +38,25 @@ var server = http.createServer(function(req, res) {
             statusCode = typeof(statusCode) == 'number' ? statusCode : 200;
 
             payload = typeof(payload) == 'object' ? payload : {};
+
+            var payloadString = JSON.stringify(payload);
+
+            res.writeHead(statusCode);
+            res.end(payloadString);
+
+            console.log(`METHOD: ${method} 
+                | PATH: ${trimmedPath} 
+                | QUERY PARAMS: ${JSON.stringify(queryStringObject)} 
+                | HEADERS: ${JSON.stringify(headers)}
+                | PAYLOAD: ${buffer}
+                | RESPONSE: ${statusCode} / ${payloadString}`);
         });
-
-        res.end('Added string\n');
-
-        console.log(`METHOD: ${method} 
-            | PATH: ${trimmedPath} 
-            | QUERY PARAMS: ${JSON.stringify(queryStringObject)} 
-            | HEADERS: ${JSON.stringify(headers)}
-            | PAYLOAD: ${buffer}`);
     });
 })
 
 server.listen(3000, function() {
     console.log('Server is listening');
 })
-
-var router = {
-    'test' : handlers.test
-};
 
 var handlers = {};
 
@@ -66,4 +66,8 @@ handlers.test = function(data, callback) {
 
 handlers.notFound = function(data, callback) {
     callback(404, {'hanlder' : 'notFound'});
+};
+
+var router = {
+    'test' : handlers.test
 };
