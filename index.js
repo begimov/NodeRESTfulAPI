@@ -86,14 +86,14 @@ var unifiedServer = function(req, res) {
 // Routing
 var handlers = {};
 
-handlers.test = function(data, callback) {
-    callback(406, {'hanlder' : 'test'});
-};
-
 handlers.notFound = function(data, callback) {
     callback(404, {'hanlder' : 'notFound'});
 };
 
+handlers.ping = function(data, callback) {
+    callback(200);
+};
+
 var router = {
-    'test' : handlers.test
+    'ping' : handlers.ping
 };
