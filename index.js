@@ -8,8 +8,8 @@ var _data = require('./lib/data');
 var config = require('./config');
 
 // TODO delete
-_data.read('test', 'test', function(err, data) {
-    console.log(JSON.parse(data));
+_data.update('test', 'test', {e:5}, function(err) {
+    console.log(err);
 });
 
 // HTTP Server
