@@ -13,4 +13,6 @@ enviroments.production = {
 var currentEnv = typeof(process.env.NODE_ENV) == 'string' 
     ? process.env.NODE_ENV.toLowerCase() : '';
 
-//
+var enviromentToExport = typeof(enviroments[currentEnv]) == 'object' ? enviroments[currentEnv] : enviroments.staging;
+
+module.exports = enviromentToExport;
