@@ -3,14 +3,8 @@ var https = require('https');
 var url = require('url');
 var StringDecoder = require('string_decoder').StringDecoder;
 var fs = require('fs');
-var _data = require('./lib/data');
-//
 var config = require('./config');
 
-// TODO delete
-_data.update('test', 'test', {e:5}, function(err) {
-    console.log(err);
-});
 
 // HTTP Server
 var httpServer = http.createServer(function(req, res) {
