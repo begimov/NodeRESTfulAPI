@@ -5,6 +5,7 @@ var StringDecoder = require('string_decoder').StringDecoder;
 var fs = require('fs');
 var config = require('./config');
 var handlers = require('./lib/handlers');
+var helpers = require('./lib/helpers');
 
 // HTTP Server
 var httpServer = http.createServer(function(req, res) {
@@ -59,7 +60,7 @@ var unifiedServer = function(req, res) {
             'queryStringObject' : queryStringObject,
             'method' : method,
             'headers' : headers,
-            'payload' : buffer
+            'payload' : helpers.parseJsonToObject(buffer)
         };
 
         handler(data, function(statusCode, payload) {
