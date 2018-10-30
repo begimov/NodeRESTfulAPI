@@ -85,5 +85,6 @@ var unifiedServer = function(req, res) {
 
 // Routing
 var router = {
-    'ping' : handlers.ping
+    'ping' : handlers.ping,
+    'users' : handlers.users
 };
